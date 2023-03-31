@@ -1,0 +1,10 @@
+$theme-colors: (
+  'primary': #2787f5,
+);
+
+$body-bg: #fff;
+$body-color: #95aac9;
+$font-size-base: 0.9375rem;
+$line-height-base: 1.6;
+
+@import '~bootstrap/scss/bootstrap.scss';
