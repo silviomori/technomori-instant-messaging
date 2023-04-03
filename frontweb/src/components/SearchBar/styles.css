@@ -1,0 +1,12 @@
+.searchbar-form {
+  background-color: #ebf1f7;
+}
+
+.searchbar-form .input-group * {
+  background-color: transparent;
+  border: none;
+}
+
+.searchbar-form .input-group input::placeholder {
+  color: var(--bs-body-color);
+}

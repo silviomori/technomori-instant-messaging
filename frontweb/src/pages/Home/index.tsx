@@ -3,15 +3,16 @@ import React, { useContext } from 'react';
 import './styles.css';
 
 import { NavigationContext, Tabs } from 'NavigationContext';
+import Chats from 'pages/Chats';
 
 const Home = () => {
   const { activeTab } = useContext(NavigationContext);
 
   return (
-    <div className="home-container d-flex w-100">
+    <div className="home-container d-flex w-100 h-100">
       <aside className="home-container-sidebar">
-        <div>
-          {activeTab === Tabs.CHATS && <h1>Chats</h1>}
+        <div className="container p-4 h-100">
+          {activeTab === Tabs.CHATS && <Chats />}
           {activeTab === Tabs.FRIENDS && <h1>Friends</h1>}
           {activeTab === Tabs.NEW_CHAT && <h1>New Chat</h1>}
           {activeTab === Tabs.NOTIFICATION && <h1>Notification</h1>}
