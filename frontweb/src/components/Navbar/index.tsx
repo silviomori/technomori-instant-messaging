@@ -1,4 +1,11 @@
+import React from 'react';
+
+import { NavigationContext, Tabs } from 'NavigationContext';
+import { useContext } from 'react';
+
 const Navbar = () => {
+  const { activeTab, setActiveTab } = useContext(NavigationContext);
+
   return (
     <nav className="navigation d-flex flex-column text-center navbar navbar-light hide-scrollbar">
       {/* Brand */}
@@ -59,9 +66,11 @@ const Navbar = () => {
         </li>
 
         {/* New chat */}
-        <li className="nav-item">
+        <li className="nav-item" onClick={() => setActiveTab(Tabs.NEW_CHAT)}>
           <a
-            className="nav-link py-0 py-lg-4"
+            className={`nav-link py-0 py-lg-4 ${
+              activeTab === Tabs.NEW_CHAT ? 'active' : ''
+            }`}
             id="tab-create-chat"
             href="#tab-content-create-chat"
             title="Create chat"
@@ -90,9 +99,11 @@ const Navbar = () => {
         </li>
 
         {/* Friends */}
-        <li className="nav-item">
+        <li className="nav-item" onClick={() => setActiveTab(Tabs.FRIENDS)}>
           <a
-            className="nav-link py-0 py-lg-4 active"
+            className={`nav-link py-0 py-lg-4 ${
+              activeTab === Tabs.FRIENDS ? 'active' : ''
+            }`}
             id="tab-friends"
             href="#tab-content-friends"
             title="Friends"
@@ -123,9 +134,11 @@ const Navbar = () => {
         </li>
 
         {/* Chats */}
-        <li className="nav-item">
+        <li className="nav-item" onClick={() => setActiveTab(Tabs.CHATS)}>
           <a
-            className="nav-link py-0 py-lg-4"
+            className={`nav-link py-0 py-lg-4 ${
+              activeTab === Tabs.CHATS ? 'active' : ''
+            }`}
             id="tab-chats"
             href="#tab-content-chats"
             title="Chats"
@@ -156,9 +169,14 @@ const Navbar = () => {
         </li>
 
         {/* Notification */}
-        <li className="nav-item">
+        <li
+          className="nav-item"
+          onClick={() => setActiveTab(Tabs.NOTIFICATION)}
+        >
           <a
-            className="nav-link py-0 py-lg-4"
+            className={`nav-link py-0 py-lg-4 ${
+              activeTab === Tabs.NOTIFICATION ? 'active' : ''
+            }`}
             id="tab-notifications"
             href="#tab-content-notifications"
             title="Notifications"
@@ -187,9 +205,14 @@ const Navbar = () => {
         </li>
 
         {/* Support */}
-        <li className="nav-item d-none d-xl-block flex-xl-grow-1">
+        <li
+          className="nav-item d-none d-xl-block flex-xl-grow-1"
+          onClick={() => setActiveTab(Tabs.SUPPORT)}
+        >
           <a
-            className="nav-link py-0 py-lg-4"
+            className={`nav-link py-0 py-lg-4 ${
+              activeTab === Tabs.SUPPORT ? 'active' : ''
+            }`}
             id="tab-support"
             href="#tab-content-support"
             title="Support"
@@ -219,9 +242,14 @@ const Navbar = () => {
         </li>
 
         {/* Switcher */}
-        <li className="nav-item d-none d-xl-block">
+        <li
+          className="nav-item d-none d-xl-block"
+          onClick={() => setActiveTab(Tabs.SWITCHER)}
+        >
           <a
-            className="switcher-btn nav-link py-0 py-lg-4"
+            className={`switcher-btn nav-link py-0 py-lg-4 ${
+              activeTab === Tabs.SWITCHER ? 'active' : ''
+            }`}
             href="#!"
             title="Themes"
           >
@@ -275,9 +303,11 @@ const Navbar = () => {
         </li>
 
         {/* Settings */}
-        <li className="nav-item">
+        <li className="nav-item" onClick={() => setActiveTab(Tabs.SETTINGS)}>
           <a
-            className="nav-link py-0 py-lg-4"
+            className={`nav-link py-0 py-lg-4 ${
+              activeTab === Tabs.SETTINGS ? 'active' : ''
+            }`}
             id="tab-settings"
             href="#tab-content-settings"
             title="Settings"
@@ -306,10 +336,15 @@ const Navbar = () => {
         </li>
 
         {/* Profile */}
-        <li className="nav-item d-none d-xl-block">
+        <li
+          className="nav-item d-none d-xl-block"
+          onClick={() => setActiveTab(Tabs.PROFILE)}
+        >
           <a
             href="#"
-            className="nav-link p-0 mt-lg-2"
+            className={`nav-link py-0 py-lg-4 ${
+              activeTab === Tabs.PROFILE ? 'active' : ''
+            }`}
             data-bs-toggle="modal"
             data-bs-target="#modal-profile"
           >
