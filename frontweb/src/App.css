@@ -21,14 +21,23 @@ h6 {
   color: var(--bs-body-color);
 }
 
-.avatar-img {
+.avatar-img-48 {
   height: 48px;
   width: 48px;
   border-radius: 50%;
   border: 2px solid white;
+  object-fit: cover;
 }
 
-.avatar-img-xs {
+.avatar-img-34 {
+  height: 34px;
+  width: 34px;
+  border-radius: 50%;
+  border: 2px solid white;
+  object-fit: cover;
+}
+
+.avatar-img-24 {
   height: 24px;
   width: 24px;
   border-radius: 50%;

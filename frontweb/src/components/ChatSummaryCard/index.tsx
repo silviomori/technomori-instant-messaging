@@ -6,7 +6,7 @@ const ChatSummaryCard = () => {
       <div className="d-flex g-0 p-3">
         <img
           src={require('assets/img/avatars/7.jpg')}
-          className="avatar-img me-2"
+          className="avatar-img-48 me-2"
           alt="..."
         />
 
@@ -36,8 +36,7 @@ const ChatSummaryCard = () => {
       <div className="card-footer py-1 px-3 d-flex flex-nowrap align-items-center justify-content-between">
         <div className="d-flex align-items-center">
           <img
-            className="avatar-img-xs mx-2"
-            style={{ height: '32px', width: 'auto' }}
+            className="avatar-img-34 mx-2"
             src={require('assets/img/avatars/bootstrap-logo.png')}
             alt="Bootstrap Community"
           />
@@ -48,24 +47,24 @@ const ChatSummaryCard = () => {
           <img
             src={require('assets/img/avatars/7.jpg')}
             alt="#"
-            className="avatar-img-xs"
+            className="avatar-img-24"
           />
 
           <img
             src={require('assets/img/avatars/11.jpg')}
             alt="#"
-            className="avatar-img-xs"
+            className="avatar-img-24"
           />
 
           <img
             src={require('assets/img/avatars/9.jpg')}
             alt="#"
-            className="avatar-img-xs"
+            className="avatar-img-24"
           />
 
           <div className="avatar avatar-xs">
             <span
-              className="d-flex flex-nowrap avatar-img-xs bg-primary align-items-center justify-content-center"
+              className="d-flex flex-nowrap avatar-img-24 bg-primary align-items-center justify-content-center"
               style={{
                 fontSize: 'xx-small',
                 color: 'white',

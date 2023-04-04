@@ -1,7 +1,7 @@
 import ChatSummaryCard from 'components/ChatSummaryCard';
 import SearchBar from 'components/SearchBar';
 
-const Chats = () => {
+const ChatList = () => {
   return (
     <div>
       <h2 className="fw-bold m-0">Chats</h2>
@@ -11,4 +11,4 @@ const Chats = () => {
   );
 };
 
-export default Chats;
+export default ChatList;
