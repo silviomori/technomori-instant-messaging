@@ -1,0 +1,14 @@
+.chat-page-body-message {
+  max-width: 450px;
+  background: #f6f9fb;
+  border-radius: 0.6rem;
+  padding: 1rem 1.25rem;
+  color: #95aac9;
+  border: none;
+}
+
+.chat-page-body-message-out {
+  background: #2787f5;
+  border-radius: 0.6rem;
+  color: #fff;
+}
