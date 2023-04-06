@@ -12,9 +12,13 @@ function App() {
 
   return (
     <NavigationContext.Provider value={{ activeTab, setActiveTab }}>
-      <div className="d-flex flex-column-reverse flex-xl-row vh-100">
-        <Navbar />
-        <Home />
+      <div className="d-flex flex-column flex-xl-row-reverse vh-100">
+        <div className="hide-scrollbar w-100 h-100">
+          <Home />
+        </div>
+        <div>
+          <Navbar />
+        </div>
       </div>
     </NavigationContext.Provider>
   );

@@ -7,7 +7,7 @@ const Navbar = () => {
   const { activeTab, setActiveTab } = useContext(NavigationContext);
 
   return (
-    <nav className="navigation d-flex flex-column text-center navbar navbar-light hide-scrollbar">
+    <nav className="navigation h-100 d-flex flex-column text-center navbar navbar-light hide-scrollbar">
       {/* Brand */}
       <a
         href="index.html"
