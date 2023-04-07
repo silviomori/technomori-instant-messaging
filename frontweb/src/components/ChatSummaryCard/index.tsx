@@ -1,44 +1,57 @@
-import { ChatDescription } from 'types/Chat';
+import { useEffect, useState } from 'react';
+
 import './styles.css';
+
+import { ChatDescription } from 'types/Chat';
+import { Message } from 'types/Message';
 
 type Props = {
   chatDescription: ChatDescription;
 };
 
 const ChatSummaryCard = ({ chatDescription }: Props) => {
+  const [latestMessage, setLatestMessage] = useState<Message>();
+
+  useEffect(() => {
+    fetch(`http://localhost:8080/chats/${chatDescription.id}/latest`).then(
+      (res) => {
+        res.json().then((res) => setLatestMessage(res));
+      },
+    );
+  }, []);
+
   return (
     <div className="card chat-summary-card mb-3 border-0 rounded-3">
-      <div className="d-flex g-0 p-3">
-        <img
-          src={chatDescription.owner.profileImgUrl}
-          className="avatar-img-48 me-2"
-          alt="..."
-        />
+      {latestMessage && (
+        <div className="d-flex g-0 p-3">
+          <img
+            src={latestMessage.user.profileImgUrl}
+            className="avatar-img-48 me-2"
+            alt="..."
+          />
 
-        <div className="card-body p-0">
-          <div className="card-title d-flex align-items-center justify-content-between">
-            <h5 className="chat-summary-card-title">
-              {chatDescription.owner.name}
-            </h5>
-            <span className="text-nowrap" style={{ fontSize: 'x-small' }}>
-              12:45 PM
-            </span>
-          </div>
-          <div className="card-text d-flex align-items-center justify-content-between">
-            <span className="chat-summary-card-text">
-              {
-                "Hello! Yeah, I'm going to meet my friend of mine at the departments stores now."
-              }
-            </span>
-            <span
-              className="badge rounded-pill bg-primary"
-              style={{ fontSize: 'xx-small' }}
-            >
-              3
-            </span>
+          <div className="card-body p-0">
+            <div className="card-title d-flex align-items-center justify-content-between">
+              <h5 className="chat-summary-card-title">
+                {latestMessage.user.name}
+              </h5>
+              <span className="text-nowrap" style={{ fontSize: 'x-small' }}>
+                12:45 PM
+              </span>
+            </div>
+            <div className="card-text d-flex align-items-center justify-content-between">
+              <span className="chat-summary-card-text"></span>
+              {latestMessage.text}
+              <span
+                className="badge rounded-pill bg-primary"
+                style={{ fontSize: 'xx-small' }}
+              >
+                3
+              </span>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       <div className="card-footer py-1 px-3 d-flex flex-nowrap align-items-center justify-content-between">
         <div className="d-flex align-items-center">

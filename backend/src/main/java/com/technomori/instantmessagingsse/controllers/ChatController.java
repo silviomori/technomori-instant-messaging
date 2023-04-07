@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.technomori.instantmessagingsse.dtos.ChatDTO;
 import com.technomori.instantmessagingsse.dtos.ChatDescriptionDTO;
+import com.technomori.instantmessagingsse.dtos.MessageDTO;
 import com.technomori.instantmessagingsse.services.ChatService;
 
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,11 @@ public class ChatController {
     @GetMapping("/{id}")
     public ResponseEntity<ChatDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
+    }
+
+    @GetMapping("/{id}/latest")
+    public ResponseEntity<MessageDTO> getChatLatestMessage(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getChatLatestMessage(id));
     }
 
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.technomori.instantmessagingsse.dtos.ChatDTO;
 import com.technomori.instantmessagingsse.dtos.ChatDescriptionDTO;
+import com.technomori.instantmessagingsse.dtos.MessageDTO;
 import com.technomori.instantmessagingsse.entities.Chat;
 import com.technomori.instantmessagingsse.repositories.ChatRepository;
 import com.technomori.instantmessagingsse.services.util.MessageUtil;
@@ -48,6 +49,13 @@ public class ChatServiceImpl implements ChatService {
                 .users(UserUtil.getUserProfileDTOs(chat.getUsers()))
                 .messages(MessageUtil.getMessagesDTOs(chat.getMessages()))
                 .build();
+    }
+
+    @Override
+    public MessageDTO getChatLatestMessage(Long id) {
+        // TODO: Refactor
+        List<MessageDTO> messages = findById(id).getMessages();
+        return messages.get(messages.size() - 1);
     }
 
 }
