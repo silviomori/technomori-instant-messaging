@@ -20,7 +20,7 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String text;
-    private LocalDate sendAt;
+    private LocalDate sentAt;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
