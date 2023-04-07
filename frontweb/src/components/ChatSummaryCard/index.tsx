@@ -1,18 +1,28 @@
+import { ChatDescription } from 'types/ChatDescription';
 import './styles.css';
 
-const ChatSummaryCard = () => {
+type Props = {
+  chatDescription: ChatDescription;
+};
+
+const ChatSummaryCard = ({ chatDescription }: Props) => {
+  console.log(
+    'chatDescription.users.length --> ' + chatDescription.users.length,
+  );
   return (
     <div className="card chat-summary-card mb-3 border-0 rounded-3">
       <div className="d-flex g-0 p-3">
         <img
-          src={require('assets/img/avatars/7.jpg')}
+          src={chatDescription.owner.profileImgUrl}
           className="avatar-img-48 me-2"
           alt="..."
         />
 
         <div className="card-body p-0">
           <div className="card-title d-flex align-items-center justify-content-between">
-            <h5 className="chat-summary-card-title">William Wright</h5>
+            <h5 className="chat-summary-card-title">
+              {chatDescription.owner.name}
+            </h5>
             <span className="text-nowrap" style={{ fontSize: 'x-small' }}>
               12:45 PM
             </span>
@@ -40,39 +50,33 @@ const ChatSummaryCard = () => {
             src={require('assets/img/avatars/bootstrap-logo.png')}
             alt="Bootstrap Community"
           />
-          <h6 className="mb-0">Bootstrap Community</h6>
+          <h6 className="mb-0">{chatDescription.name}</h6>
         </div>
 
         <div className="avatar-group d-flex me-3 justify-content-end">
-          <img
-            src={require('assets/img/avatars/7.jpg')}
-            alt="#"
-            className="avatar-img-24"
-          />
+          {chatDescription.users.slice(0, 3).map((user) => (
+            <img src={user.profileImgUrl} alt="#" className="avatar-img-24" />
+          ))}
 
-          <img
-            src={require('assets/img/avatars/11.jpg')}
-            alt="#"
-            className="avatar-img-24"
-          />
-
-          <img
-            src={require('assets/img/avatars/9.jpg')}
-            alt="#"
-            className="avatar-img-24"
-          />
-
-          <div className="avatar avatar-xs">
-            <span
-              className="d-flex flex-nowrap avatar-img-24 bg-primary align-items-center justify-content-center"
-              style={{
-                fontSize: 'xx-small',
-                color: 'white',
-              }}
-            >
-              +5
-            </span>
-          </div>
+          {chatDescription.users.length > 4 ? (
+            <div className="avatar avatar-xs">
+              <span
+                className="d-flex flex-nowrap avatar-img-24 bg-primary align-items-center justify-content-center"
+                style={{
+                  fontSize: 'xx-small',
+                  color: 'white',
+                }}
+              >
+                +{chatDescription.users.length - 3}
+              </span>
+            </div>
+          ) : chatDescription.users.length === 4 ? (
+            <img
+              src={chatDescription.users.at(3)?.profileImgUrl}
+              alt="#"
+              className="avatar-img-24"
+            />
+          ) : null}
         </div>
       </div>
     </div>
