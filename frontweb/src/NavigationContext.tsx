@@ -14,9 +14,13 @@ export enum Tabs {
 type NavigationContextType = {
   activeTab: Tabs;
   setActiveTab: (tab: Tabs) => void;
+  activeChat: string;
+  setActiveChat: (id: string) => void;
 };
 
 export const NavigationContext = React.createContext<NavigationContextType>({
   activeTab: Tabs.CHATS,
   setActiveTab: () => {},
+  activeChat: '',
+  setActiveChat: () => {},
 });

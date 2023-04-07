@@ -22,7 +22,6 @@ const FriendList = () => {
       <div className="hide-scrollbar">
         {friendList &&
           friendList.map((friend) => {
-            console.log(friend);
             return (
               <div key={friend.id}>
                 <FriendCard userProfile={friend} />

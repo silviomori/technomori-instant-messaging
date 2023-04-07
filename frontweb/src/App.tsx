@@ -9,9 +9,12 @@ import Home from 'pages/Home';
 
 function App() {
   const [activeTab, setActiveTab] = useState<Tabs>(Tabs.CHATS);
+  const [activeChat, setActiveChat] = useState<string>('');
 
   return (
-    <NavigationContext.Provider value={{ activeTab, setActiveTab }}>
+    <NavigationContext.Provider
+      value={{ activeTab, setActiveTab, activeChat, setActiveChat }}
+    >
       <div className="d-flex flex-column flex-xl-row-reverse vh-100">
         <div className="hide-scrollbar w-100 h-100">
           <Home />

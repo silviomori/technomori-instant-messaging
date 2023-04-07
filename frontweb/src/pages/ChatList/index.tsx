@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import SearchBar from 'components/SearchBar';
 import ChatSummaryCard from 'components/ChatSummaryCard';
-import { ChatDescription } from 'types/ChatDescription';
+import { ChatDescription } from 'types/Chat';
+import { NavigationContext } from 'NavigationContext';
 
 const ChatList = () => {
+  const { setActiveChat } = useContext(NavigationContext);
   const [chatList, setChatList] = useState<ChatDescription[]>();
   useEffect(() => {
     fetch('http://localhost:8080/chats').then((res) => {
@@ -22,11 +24,15 @@ const ChatList = () => {
       <div className="hide-scrollbar">
         {chatList &&
           chatList.map((chat) => {
-            console.log(chat);
             return (
-              <div key={chat.id}>
+              <a
+                key={chat.id}
+                onClick={() => {
+                  setActiveChat(chat.id);
+                }}
+              >
                 <ChatSummaryCard chatDescription={chat} />
-              </div>
+              </a>
             );
           })}
       </div>

@@ -1,4 +1,4 @@
-import { ChatDescription } from 'types/ChatDescription';
+import { ChatDescription } from 'types/Chat';
 import './styles.css';
 
 type Props = {
@@ -6,9 +6,6 @@ type Props = {
 };
 
 const ChatSummaryCard = ({ chatDescription }: Props) => {
-  console.log(
-    'chatDescription.users.length --> ' + chatDescription.users.length,
-  );
   return (
     <div className="card chat-summary-card mb-3 border-0 rounded-3">
       <div className="d-flex g-0 p-3">
@@ -55,26 +52,30 @@ const ChatSummaryCard = ({ chatDescription }: Props) => {
 
         <div className="avatar-group d-flex me-3 justify-content-end">
           {chatDescription.users.slice(0, 3).map((user) => (
-            <img src={user.profileImgUrl} alt="#" className="avatar-img-24" />
+            <img
+              src={user.profileImgUrl}
+              alt="#"
+              className="avatar-img-24"
+              key={user.id}
+            />
           ))}
 
           {chatDescription.users.length > 4 ? (
-            <div className="avatar avatar-xs">
-              <span
-                className="d-flex flex-nowrap avatar-img-24 bg-primary align-items-center justify-content-center"
-                style={{
-                  fontSize: 'xx-small',
-                  color: 'white',
-                }}
-              >
-                +{chatDescription.users.length - 3}
-              </span>
-            </div>
+            <span
+              className="d-flex flex-nowrap avatar-img-24 bg-primary align-items-center justify-content-center"
+              style={{
+                fontSize: 'xx-small',
+                color: 'white',
+              }}
+            >
+              +{chatDescription.users.length - 3}
+            </span>
           ) : chatDescription.users.length === 4 ? (
             <img
               src={chatDescription.users.at(3)?.profileImgUrl}
               alt="#"
               className="avatar-img-24"
+              key={chatDescription.users.at(3)?.id}
             />
           ) : null}
         </div>
