@@ -20,6 +20,21 @@ const ChatSummaryCard = ({ chatDescription }: Props) => {
     );
   }, []);
 
+  useEffect(() => {
+    const eventSource = new EventSource(
+      `http://localhost:8080/messages/stream/${chatDescription.id}`,
+    );
+
+    eventSource.onmessage = (event) => {
+      const newMessage = JSON.parse(event.data);
+      setLatestMessage(newMessage);
+    };
+
+    return () => {
+      eventSource.close();
+    };
+  }, []);
+
   return (
     <div className="card chat-summary-card mb-3 border-0 rounded-3">
       {latestMessage && (
