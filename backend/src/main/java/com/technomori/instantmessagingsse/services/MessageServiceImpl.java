@@ -1,11 +1,11 @@
 package com.technomori.instantmessagingsse.services;
 
-import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -26,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MessageServiceImpl implements MessageService {
 
+    private final JmsTemplate jmsTemplate;
     private final EmittersToChat emittersToChat;
 
     private final MessageRepository msgRepo;
@@ -46,28 +47,9 @@ public class MessageServiceImpl implements MessageService {
                         .build());
         MessageDTO messageDTO = MessageUtil.getMessageDTO(msg);
 
-        sendMessageToAllClients(messageDTO);
+        jmsTemplate.convertAndSend("broadcast", messageDTO);
 
         return msg.getId();
-    }
-
-    private void sendMessageToAllClients(MessageDTO message) {
-        List<SseEmitter> emitters = emittersToChat.get(message.getChatId());
-        if (emitters == null) {
-            return;
-        }
-
-        List<SseEmitter> deadEmitters = new ArrayList<>();
-
-        for (SseEmitter emitter : emitters) {
-            try {
-                emitter.send(message);
-            } catch (IOException e) {
-                deadEmitters.add(emitter);
-            }
-        }
-
-        emitters.removeAll(deadEmitters);
     }
 
     @Override
@@ -83,5 +65,4 @@ public class MessageServiceImpl implements MessageService {
         emitter.onTimeout(() -> emitters.remove(emitter));
         return emitter;
     }
-
 }
