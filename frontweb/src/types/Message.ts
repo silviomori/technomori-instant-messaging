@@ -7,3 +7,9 @@ export type Message = {
   user: UserProfile;
   chatId: string;
 };
+
+export type MessageInsert = {
+  userId: number;
+  chatId: number;
+  text: string;
+};

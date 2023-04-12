@@ -1,0 +1,12 @@
+.chat-page-write-message-form {
+  background-color: rgb(235, 241, 247);
+}
+
+.chat-page-write-message-form .input-group * {
+  background-color: transparent;
+  border: none;
+}
+
+.chat-page-write-message-form .input-group input::placeholder {
+  color: var(--bs-body-color);
+}

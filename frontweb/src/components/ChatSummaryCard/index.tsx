@@ -18,7 +18,7 @@ const ChatSummaryCard = ({ chatDescription }: Props) => {
         res.json().then((res) => setLatestMessage(res));
       },
     );
-  }, []);
+  }, [chatDescription.id]);
 
   useEffect(() => {
     const eventSource = new EventSource(
@@ -33,7 +33,7 @@ const ChatSummaryCard = ({ chatDescription }: Props) => {
     return () => {
       eventSource.close();
     };
-  }, []);
+  }, [chatDescription.id]);
 
   return (
     <div className="card chat-summary-card mb-3 border-0 rounded-3">

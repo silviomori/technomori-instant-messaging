@@ -7,6 +7,7 @@ import { Message } from 'types/Message';
 import ChatPageBodyNoMessages from './ChatPageBodyNoMessages';
 import ChatPageBodyNotSelected from './ChatPageBodyNotSelected';
 import ChatPageTitleBar from './ChatPageTitleBar';
+import ChatPageWriteMessage from './ChatPageWriteMessage';
 
 const ChatPage = () => {
   const { activeChat } = useContext(NavigationContext);
@@ -30,7 +31,6 @@ const ChatPage = () => {
       );
       eventSource.onmessage = (event) => {
         const newMessage = JSON.parse(event.data);
-        console.log('New message on ChatPage.useEffect: ' + newMessage);
         setMessages((previous) =>
           previous ? [...previous, newMessage] : [newMessage],
         );
@@ -95,6 +95,8 @@ const ChatPage = () => {
               </div>
             )}
           </div>
+
+          <ChatPageWriteMessage />
         </>
       ) : (
         <ChatPageBodyNotSelected />
