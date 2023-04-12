@@ -33,6 +33,8 @@ public class ChatServiceImpl implements ChatService {
                         .users(chat.getUsers().stream()
                                 .map(user -> UserUtil.getUserProfileDTO(user))
                                 .collect(Collectors.toList()))
+                        .latestMessage(
+                                MessageUtil.getMessageDTO(chat.getMessages().get(chat.getMessages().size() - 1)))
                         .build())
                 .toList();
     }

@@ -15,5 +15,6 @@ public class ChatDescriptionDTO {
     private String purpose;
     private Boolean openToPublic;
     private List<UserProfileDTO> users;
+    private MessageDTO latestMessage;
 
 }

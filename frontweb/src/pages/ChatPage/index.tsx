@@ -1,6 +1,6 @@
 import './styles.css';
 
-import { NavigationContext } from 'NavigationContext';
+import { AppContext } from 'AppContext';
 import { useContext, useEffect, useRef, useState } from 'react';
 
 import { Message } from 'types/Message';
@@ -10,38 +10,8 @@ import ChatPageTitleBar from './ChatPageTitleBar';
 import ChatPageWriteMessage from './ChatPageWriteMessage';
 
 const ChatPage = () => {
-  const { activeChat } = useContext(NavigationContext);
-  // const [chat, setChat] = useState<Chat>();
-  const [messages, setMessages] = useState<Message[] | null>(null);
+  const { activeChat, messagesActiveChat } = useContext(AppContext);
   const chatWindowRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (activeChat) {
-      // fetch chat info and messages
-      fetch(`http://localhost:8080/chats/${activeChat}`).then((res) => {
-        res.json().then((res) => {
-          // setChat(res);
-          setMessages(res?.messages);
-        });
-      });
-
-      // register eventSource to receive new messages
-      const eventSource = new EventSource(
-        `http://localhost:8080/messages/stream/${activeChat}`,
-      );
-      eventSource.onmessage = (event) => {
-        const newMessage = JSON.parse(event.data);
-        setMessages((previous) =>
-          previous ? [...previous, newMessage] : [newMessage],
-        );
-      };
-
-      // close the eventSource when unmount component
-      return () => {
-        eventSource.close();
-      };
-    }
-  }, [activeChat]);
 
   // Scroll to the end of the chat window whenever messages change
   useEffect(() => {
@@ -49,7 +19,7 @@ const ChatPage = () => {
       top: chatWindowRef.current.scrollHeight,
       behavior: 'smooth',
     });
-  }, [messages]);
+  }, [messagesActiveChat]);
 
   return (
     <div className="container d-flex flex-column">
@@ -57,7 +27,7 @@ const ChatPage = () => {
         <>
           <ChatPageTitleBar />
           <div className="hide-scrollbar h-100" ref={chatWindowRef}>
-            {messages?.map((msg) => {
+            {messagesActiveChat?.map((msg) => {
               return (
                 <div
                   className={`d-flex mt-4 align-items-end ${
@@ -89,7 +59,7 @@ const ChatPage = () => {
               );
             })}
 
-            {!messages && (
+            {!messagesActiveChat && (
               <div className="h-100">
                 <ChatPageBodyNoMessages />
               </div>

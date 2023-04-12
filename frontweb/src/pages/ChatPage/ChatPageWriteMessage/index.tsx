@@ -1,4 +1,4 @@
-import { NavigationContext } from 'NavigationContext';
+import { AppContext } from 'AppContext';
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { MessageInsert } from 'types/Message';
@@ -6,15 +6,15 @@ import { MessageInsert } from 'types/Message';
 import './styles.css';
 
 const ChatPageWriteMessage = () => {
-  const { activeChat } = useContext(NavigationContext);
+  const { activeChat } = useContext(AppContext);
   const { register, handleSubmit, reset } = useForm<MessageInsert>();
   const onSubmit = async (msg: MessageInsert) => {
-    msg = { ...msg, text: msg.text.trim() };
+    msg = { ...msg, text: msg.text?.trim() };
     if (!msg.text) {
       reset({ text: '' });
       return;
     }
-    msg.chatId = parseInt(activeChat);
+    msg.chatId = activeChat;
     msg.userId = 1;
     const msg_str = JSON.stringify(msg);
     try {

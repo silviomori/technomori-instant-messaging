@@ -52,9 +52,7 @@ public class MessageServiceImpl implements MessageService {
         return msg.getId();
     }
 
-    @Override
-    public SseEmitter registerEmitter(Long chatId) {
-        SseEmitter emitter = new SseEmitter(-1L);
+    private void registerEmitter(Long chatId, SseEmitter emitter) {
         final List<SseEmitter> emitters = emittersToChat.getOrDefault(chatId,
                 new CopyOnWriteArrayList<>());
         if (emitters.size() == 0) {
@@ -63,6 +61,13 @@ public class MessageServiceImpl implements MessageService {
         emitters.add(emitter);
         emitter.onCompletion(() -> emitters.remove(emitter));
         emitter.onTimeout(() -> emitters.remove(emitter));
+    }
+
+    @Override
+    public SseEmitter registerEmitter(Long[] chatIds) {
+        final SseEmitter emitter = new SseEmitter(-1L);
+        Arrays.stream(chatIds).forEach(chatId -> registerEmitter(chatId, emitter));
         return emitter;
     }
+
 }

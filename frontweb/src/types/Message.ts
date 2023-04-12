@@ -5,11 +5,11 @@ export type Message = {
   text: string;
   sentAt: string;
   user: UserProfile;
-  chatId: string;
+  chatId: number;
 };
 
 export type MessageInsert = {
-  userId: number;
-  chatId: number;
-  text: string;
+  userId?: number;
+  chatId?: number;
+  text?: string;
 };

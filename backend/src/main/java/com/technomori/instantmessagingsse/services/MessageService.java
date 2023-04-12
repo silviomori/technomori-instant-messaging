@@ -8,6 +8,6 @@ public interface MessageService {
 
     Long insert(MessageInsertDTO message);
 
-    SseEmitter registerEmitter(Long chatId);
+    SseEmitter registerEmitter(Long[] chatIds);
 
 }

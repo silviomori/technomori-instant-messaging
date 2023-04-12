@@ -4,10 +4,10 @@ import java.net.URI;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -30,9 +30,9 @@ public class MessageController {
         return ResponseEntity.created(uri).build();
     }
 
-    @GetMapping("/stream/{chatId}")
-    public SseEmitter stream(@PathVariable Long chatId) {
-        return service.registerEmitter(chatId);
+    @GetMapping("/stream")
+    public SseEmitter stream(@RequestParam Long[] chatIds) {
+        return service.registerEmitter(chatIds);
     }
 
 }

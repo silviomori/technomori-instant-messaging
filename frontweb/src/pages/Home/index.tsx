@@ -2,13 +2,13 @@ import React, { useContext } from 'react';
 
 import './styles.css';
 
-import { NavigationContext, Tabs } from 'NavigationContext';
+import { AppContext, Tabs } from 'AppContext';
 import ChatList from 'pages/ChatList';
 import ChatPage from 'pages/ChatPage';
 import FriendList from 'pages/FriendList';
 
 const Home = () => {
-  const { activeTab } = useContext(NavigationContext);
+  const { activeTab } = useContext(AppContext);
 
   return (
     <div className="home-container d-flex w-100 h-100">

@@ -3,16 +3,10 @@ import { useContext, useEffect, useState } from 'react';
 import SearchBar from 'components/SearchBar';
 import ChatSummaryCard from 'components/ChatSummaryCard';
 import { ChatDescription } from 'types/Chat';
-import { NavigationContext } from 'NavigationContext';
+import { AppContext } from 'AppContext';
 
 const ChatList = () => {
-  const { setActiveChat } = useContext(NavigationContext);
-  const [chatList, setChatList] = useState<ChatDescription[]>();
-  useEffect(() => {
-    fetch('http://localhost:8080/chats').then((res) => {
-      res.json().then((res) => setChatList(res));
-    });
-  }, []);
+  const { chatDescriptions, setActiveChat } = useContext(AppContext);
 
   return (
     <div className="d-flex flex-column w-100">
@@ -22,8 +16,8 @@ const ChatList = () => {
       </div>
 
       <div className="hide-scrollbar">
-        {chatList &&
-          chatList.map((chat) => {
+        {chatDescriptions &&
+          chatDescriptions.map((chat) => {
             return (
               <a
                 key={chat.id}

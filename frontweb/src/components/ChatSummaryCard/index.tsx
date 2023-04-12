@@ -1,46 +1,18 @@
-import { useEffect, useState } from 'react';
-
 import './styles.css';
 
 import { ChatDescription } from 'types/Chat';
-import { Message } from 'types/Message';
 
 type Props = {
   chatDescription: ChatDescription;
 };
 
 const ChatSummaryCard = ({ chatDescription }: Props) => {
-  const [latestMessage, setLatestMessage] = useState<Message>();
-
-  useEffect(() => {
-    fetch(`http://localhost:8080/chats/${chatDescription.id}/latest`).then(
-      (res) => {
-        res.json().then((res) => setLatestMessage(res));
-      },
-    );
-  }, [chatDescription.id]);
-
-  useEffect(() => {
-    const eventSource = new EventSource(
-      `http://localhost:8080/messages/stream/${chatDescription.id}`,
-    );
-
-    eventSource.onmessage = (event) => {
-      const newMessage = JSON.parse(event.data);
-      setLatestMessage(newMessage);
-    };
-
-    return () => {
-      eventSource.close();
-    };
-  }, [chatDescription.id]);
-
   return (
     <div className="card chat-summary-card mb-3 border-0 rounded-3">
-      {latestMessage && (
+      {chatDescription.latestMessage && (
         <div className="d-flex g-0 p-3">
           <img
-            src={latestMessage.user.profileImgUrl}
+            src={chatDescription.latestMessage.user.profileImgUrl}
             className="avatar-img-48 me-2"
             alt="..."
           />
@@ -48,7 +20,7 @@ const ChatSummaryCard = ({ chatDescription }: Props) => {
           <div className="card-body p-0">
             <div className="card-title d-flex align-items-center justify-content-between">
               <h5 className="chat-summary-card-title">
-                {latestMessage.user.name}
+                {chatDescription.latestMessage.user.name}
               </h5>
               <span className="text-nowrap" style={{ fontSize: 'x-small' }}>
                 12:45 PM
@@ -56,7 +28,7 @@ const ChatSummaryCard = ({ chatDescription }: Props) => {
             </div>
             <div className="card-text d-flex align-items-center justify-content-between">
               <span className="chat-summary-card-text"></span>
-              {latestMessage.text}
+              {chatDescription.latestMessage.text}
               <span
                 className="badge rounded-pill bg-primary"
                 style={{ fontSize: 'xx-small' }}

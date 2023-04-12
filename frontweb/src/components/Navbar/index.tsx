@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { NavigationContext, Tabs } from 'NavigationContext';
+import { AppContext, Tabs } from 'AppContext';
 import { useContext } from 'react';
 
 const Navbar = () => {
-  const { activeTab, setActiveTab } = useContext(NavigationContext);
+  const { activeTab, setActiveTab } = useContext(AppContext);
 
   return (
     <nav className="navigation h-100 d-flex flex-column text-center navbar navbar-light hide-scrollbar">
