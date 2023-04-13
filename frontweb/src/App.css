@@ -17,6 +17,10 @@ h6 {
   color: #293951;
 }
 
+a {
+  text-decoration: none;
+}
+
 .nav-link {
   color: var(--bs-body-color);
 }
