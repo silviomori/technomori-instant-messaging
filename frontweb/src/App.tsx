@@ -7,8 +7,12 @@ import { AppContext, Tabs } from 'AppContext';
 import Home from 'pages/Home';
 import { ChatDescription } from 'types/Chat';
 import { Message } from 'types/Message';
+import Auth from 'pages/Auth';
+import { useAuth0 } from '@auth0/auth0-react';
 
 function App() {
+  const { isAuthenticated } = useAuth0();
+
   const [activeTab, setActiveTab] = useState<Tabs>(Tabs.CHATS);
   const [activeChat, setActiveChat] = useState<number | undefined>(undefined);
   const [chatDescriptions, setChatDescriptions] = useState<
@@ -87,14 +91,18 @@ function App() {
         setMessagesActiveChat,
       }}
     >
-      <div className="d-flex flex-column flex-xl-row-reverse vh-100">
-        <div className="hide-scrollbar w-100 h-100">
-          <Home />
+      {isAuthenticated ? (
+        <div className="d-flex flex-column flex-xl-row-reverse vh-100">
+          <div className="hide-scrollbar w-100 h-100">
+            <Home />
+          </div>
+          <div>
+            <Navbar />
+          </div>
         </div>
-        <div>
-          <Navbar />
-        </div>
-      </div>
+      ) : (
+        <Auth />
+      )}
     </AppContext.Provider>
   );
 }

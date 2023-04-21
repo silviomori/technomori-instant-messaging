@@ -10,45 +10,23 @@
   font-size: 2em;
   font-weight: normal;
   text-align: center;
-  margin-top: 50px;
-  margin-bottom: 40px;
+  /* margin-top: 50px;
+  margin-bottom: 40px; */
 }
 
-.signin-link-recover {
-  font-size: 1em;
-  letter-spacing: -0.015em;
-  color: #407bff;
-  display: block;
-  margin-bottom: 70px;
-}
-
-.signin-link-register {
-  font-weight: bold;
-  font-size: 1em;
-  text-align: center;
-  letter-spacing: -0.015em;
-  text-decoration-line: underline;
-  color: #407bff;
-  margin-left: 10px;
-}
-
-.signin-submit {
-  font-weight: bold;
-  color: white;
-  margin-bottom: 10px;
-}
-
-.signin-form-not-registered {
-  font-weight: bold;
-  font-size: 1em;
+.signin-card h2 {
+  font-size: 1.5em;
+  font-weight: normal;
   text-align: center;
   letter-spacing: -0.015em;
   color: #9e9e9e;
 }
 
-.signup-container {
-  text-align: center;
-  margin-bottom: 30px;
+.signin-submit {
+  font-size: 1.5em;
+  color: white;
+  /* margin-top: 40px;
+  margin-bottom: 50px; */
 }
 
 @media (min-width: 576px) {

@@ -1,82 +1,24 @@
-import { useContext } from 'react';
-
 import './styles.css';
-import { useForm } from 'react-hook-form';
-
-type CredentialsDTO = {
-  email: string;
-  password: string;
-};
-
-type LocationState = {
-  from: string;
-};
+import { useAuth0 } from '@auth0/auth0-react';
 
 const Signin = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<CredentialsDTO>();
-
-  const onSubmit = (credentialsDTO: CredentialsDTO) => {
-    console.log(credentialsDTO);
-  };
+  const { loginWithRedirect } = useAuth0();
 
   return (
     <div className="signin-card">
-      <h1>Sign In</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-4">
-          <input
-            {...register('email', {
-              required: 'Required field',
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: 'Invalid email address',
-              },
-            })}
-            type="text"
-            className={`form-control base-input ${
-              errors.email ? 'is-invalid' : ''
-            }`}
-            placeholder="Email"
-            name="email"
-          />
-          <div className="invalid-feedback d-block">
-            {errors.email?.message}
-          </div>
-        </div>
-        <div className="mb-2">
-          <input
-            {...register('password', { required: 'Required field' })}
-            type="password"
-            className={`form-control base-input ${
-              errors.password ? 'is-invalid' : ''
-            }`}
-            placeholder="Password"
-            name="password"
-          />
-          <div className="invalid-feedback d-block">
-            {errors.password?.message}
-          </div>
-        </div>
-        <a href="/admin/auth/recover" className="signin-link-recover">
-          Forgot password
-        </a>
-        <button className="btn btn-primary h4 signin-submit w-100 rounded-3">
-          Sign in
-        </button>
+      <h1 className="my-5">Sign In</h1>
 
-        <div className="signup-container">
-          <span className="signin-form-not-registered">
-            New to SnapMessage?
-          </span>
-          <a href="/admin/auth/register" className="signin-link-register">
-            Create account
-          </a>
-        </div>
-      </form>
+      <h2>
+        Enjoy seamless communication with our user-friendly interface and
+        advanced technology.
+      </h2>
+
+      <button
+        className="btn btn-primary signin-submit w-100 rounded-3 py-2 my-5"
+        onClick={() => loginWithRedirect()}
+      >
+        Sign in
+      </button>
     </div>
   );
 };
