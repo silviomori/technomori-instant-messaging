@@ -1,5 +1,6 @@
 package com.technomori.instantmessagingsse.controllers;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -23,4 +24,10 @@ public class UserController {
     public ResponseEntity<List<UserProfileDTO>> findAll() {
         return ResponseEntity.ok(service.findAll());
     }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserProfileDTO> findAuthenticated(Principal principal) {
+        return ResponseEntity.ok(service.findAuthenticated(principal));
+    }
+
 }

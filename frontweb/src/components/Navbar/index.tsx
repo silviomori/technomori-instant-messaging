@@ -6,7 +6,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 const Navbar = () => {
   const { isAuthenticated, user, logout } = useAuth0();
-  const { activeTab, setActiveTab } = useContext(AppContext);
+  const { activeTab, setActiveTab, userProfile } = useContext(AppContext);
 
   return (
     <nav className="navigation h-100 d-flex flex-column text-center navbar navbar-light hide-scrollbar">
@@ -351,7 +351,13 @@ const Navbar = () => {
             data-bs-target="#modal-profile"
           >
             <div className="icon icon-xl" onClick={() => logout()}>
-              {isAuthenticated && user ? (
+              {userProfile?.profileImgUrl ? (
+                <img
+                  src={userProfile?.profileImgUrl}
+                  className="avatar-img-48"
+                  alt="..."
+                />
+              ) : user?.picture ? (
                 <img src={user.picture} className="avatar-img-48" alt="..." />
               ) : (
                 <svg

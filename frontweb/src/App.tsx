@@ -9,10 +9,12 @@ import { ChatDescription } from 'types/Chat';
 import { Message } from 'types/Message';
 import Auth from 'pages/Auth';
 import { useAuth0 } from '@auth0/auth0-react';
+import { UserProfile } from 'types/UserProfile';
 
 function App() {
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
 
+  const [userProfile, setUserProfile] = useState<UserProfile | undefined>();
   const [activeTab, setActiveTab] = useState<Tabs>(Tabs.CHATS);
   const [activeChat, setActiveChat] = useState<number | undefined>(undefined);
   const [chatDescriptions, setChatDescriptions] = useState<
@@ -104,9 +106,37 @@ function App() {
 
   useEffect(getChatHistory, [getChatHistory]);
 
+  // fetch user profile data
+  const getUserProfile = useCallback(() => {
+    (async () => {
+      if (isAuthenticated) {
+        try {
+          const token = await getAccessTokenSilently();
+          fetch(`http://localhost:8080/users/me`, {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }).then((res) => {
+            res.json().then((res) => {
+              setUserProfile(res);
+            });
+          });
+        } catch (e) {
+          console.log(e);
+        }
+      } else {
+        setUserProfile(undefined);
+      }
+    })();
+  }, [getAccessTokenSilently, isAuthenticated]);
+
+  useEffect(getUserProfile, [getUserProfile]);
+
   return (
     <AppContext.Provider
       value={{
+        userProfile,
+        setUserProfile,
         activeTab,
         setActiveTab,
         activeChat,

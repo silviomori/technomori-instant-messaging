@@ -1,6 +1,7 @@
 import React from 'react';
 import { ChatDescription } from 'types/Chat';
 import { Message } from 'types/Message';
+import { UserProfile } from 'types/UserProfile';
 
 export enum Tabs {
   NEW_CHAT,
@@ -14,6 +15,8 @@ export enum Tabs {
 }
 
 type AppContextType = {
+  userProfile: UserProfile | undefined;
+  setUserProfile: (profile: UserProfile) => void;
   activeTab: Tabs;
   setActiveTab: (tab: Tabs) => void;
   activeChat?: number;
@@ -25,6 +28,8 @@ type AppContextType = {
 };
 
 export const AppContext = React.createContext<AppContextType>({
+  userProfile: undefined,
+  setUserProfile: () => {},
   activeTab: Tabs.CHATS,
   setActiveTab: () => {},
   activeChat: undefined,
