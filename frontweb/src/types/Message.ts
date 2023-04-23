@@ -9,7 +9,6 @@ export type Message = {
 };
 
 export type MessageInsert = {
-  userId?: number;
   chatId?: number;
   text?: string;
 };

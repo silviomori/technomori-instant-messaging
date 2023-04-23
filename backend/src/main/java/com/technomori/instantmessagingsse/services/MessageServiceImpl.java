@@ -1,5 +1,6 @@
 package com.technomori.instantmessagingsse.services;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -16,9 +17,9 @@ import com.technomori.instantmessagingsse.entities.Message;
 import com.technomori.instantmessagingsse.entities.User;
 import com.technomori.instantmessagingsse.repositories.ChatRepository;
 import com.technomori.instantmessagingsse.repositories.MessageRepository;
-import com.technomori.instantmessagingsse.repositories.UserRepository;
 import com.technomori.instantmessagingsse.services.beans.EmittersToChat;
 import com.technomori.instantmessagingsse.services.util.MessageUtil;
+import com.technomori.instantmessagingsse.services.util.UserUtil;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,12 +31,12 @@ public class MessageServiceImpl implements MessageService {
     private final EmittersToChat emittersToChat;
 
     private final MessageRepository msgRepo;
-    private final UserRepository userRepo;
     private final ChatRepository chatRepo;
+    private final UserUtil userUtil;
 
     @Override
-    public Long insert(MessageInsertDTO message) {
-        User user = userRepo.getReferenceById(message.getUserId());
+    public Long insert(MessageInsertDTO message, Principal principal) {
+        User user = userUtil.getAuthenticatedUser(principal);
         Chat chat = chatRepo.getReferenceById(message.getChatId());
 
         Message msg = msgRepo.saveAndFlush(

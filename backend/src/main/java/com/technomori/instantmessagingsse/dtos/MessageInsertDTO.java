@@ -8,7 +8,6 @@ import lombok.Data;
 public class MessageInsertDTO {
 
     private String text;
-    private Long userId;
     private Long chatId;
 
 }

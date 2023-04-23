@@ -1,15 +1,17 @@
 import './styles.css';
 
 import { AppContext } from 'AppContext';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 
-import { Message } from 'types/Message';
 import ChatPageBodyNoMessages from './ChatPageBodyNoMessages';
 import ChatPageBodyNotSelected from './ChatPageBodyNotSelected';
 import ChatPageTitleBar from './ChatPageTitleBar';
 import ChatPageWriteMessage from './ChatPageWriteMessage';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const ChatPage = () => {
+  const { user } = useAuth0();
+
   const { activeChat, messagesActiveChat } = useContext(AppContext);
   const chatWindowRef = useRef<HTMLDivElement | null>(null);
 
@@ -28,10 +30,11 @@ const ChatPage = () => {
           <ChatPageTitleBar />
           <div className="hide-scrollbar h-100" ref={chatWindowRef}>
             {messagesActiveChat?.map((msg) => {
+              const isMessageMine = msg.user.email === user?.email;
               return (
                 <div
                   className={`d-flex mt-4 align-items-end ${
-                    msg.user.id === 1 ? 'flex-row-reverse' : ''
+                    isMessageMine ? 'flex-row-reverse' : ''
                   }`}
                   key={msg.id}
                 >
@@ -42,12 +45,12 @@ const ChatPage = () => {
                   />
                   <div
                     className={`d-flex flex-column ${
-                      msg.user.id === 1 ? 'align-items-end me-3' : 'ms-3'
+                      isMessageMine ? 'align-items-end me-3' : 'ms-3'
                     }`}
                   >
                     <div
                       className={`card mt-2 chat-page-body-message ${
-                        msg.user.id === 1 ? 'chat-page-body-message-out' : ''
+                        isMessageMine ? 'chat-page-body-message-out' : ''
                       }`}
                       style={{ width: 'fit-content' }}
                       key={msg.id}

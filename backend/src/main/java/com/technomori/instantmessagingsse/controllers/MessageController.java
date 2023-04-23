@@ -1,6 +1,7 @@
 package com.technomori.instantmessagingsse.controllers;
 
 import java.net.URI;
+import java.security.Principal;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +25,8 @@ public class MessageController {
     private final MessageService service;
 
     @PostMapping
-    public ResponseEntity<Void> insert(@RequestBody MessageInsertDTO message) {
-        Long id = service.insert(message);
+    public ResponseEntity<Void> insert(@RequestBody MessageInsertDTO message, Principal principal) {
+        Long id = service.insert(message, principal);
         URI uri = URI.create("/messages/" + id);
         return ResponseEntity.created(uri).build();
     }

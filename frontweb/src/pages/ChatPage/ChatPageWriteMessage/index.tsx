@@ -17,7 +17,6 @@ const ChatPageWriteMessage = () => {
       return;
     }
     msg.chatId = activeChat;
-    msg.userId = 1;
     const msg_str = JSON.stringify(msg);
     try {
       const token = await getAccessTokenSilently();
