@@ -17,3 +17,5 @@ spring:
           issuer-uri: https://dev-rgcjprrpeiwe46rr.us.auth0.com/
 auth0:
   audience: snap-message-api
+  claim:
+    user_email: https://snapmessage.com/email

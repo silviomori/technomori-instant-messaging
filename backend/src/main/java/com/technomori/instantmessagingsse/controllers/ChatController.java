@@ -1,5 +1,6 @@
 package com.technomori.instantmessagingsse.controllers;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -23,8 +24,8 @@ public class ChatController {
     private final ChatService service;
 
     @GetMapping
-    public ResponseEntity<List<ChatDescriptionDTO>> findAll() {
-        return ResponseEntity.ok(service.findAll());
+    public ResponseEntity<List<ChatDescriptionDTO>> findAll(Principal principal) {
+        return ResponseEntity.ok(service.findAll(principal));
     }
 
     @GetMapping("/{id}")
