@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    password: ''
+    url: jdbc:h2:mem:testdb
+    username: sa
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    defer-datasource-initialization: true
+    show-sql: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://dev-rgcjprrpeiwe46rr.us.auth0.com/
+auth0:
+  audience: snap-message-api

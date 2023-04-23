@@ -1,3 +1,4 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import { AppContext } from 'AppContext';
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
@@ -6,6 +7,7 @@ import { MessageInsert } from 'types/Message';
 import './styles.css';
 
 const ChatPageWriteMessage = () => {
+  const { getAccessTokenSilently } = useAuth0();
   const { activeChat } = useContext(AppContext);
   const { register, handleSubmit, reset } = useForm<MessageInsert>();
   const onSubmit = async (msg: MessageInsert) => {
@@ -18,10 +20,13 @@ const ChatPageWriteMessage = () => {
     msg.userId = 1;
     const msg_str = JSON.stringify(msg);
     try {
+      const token = await getAccessTokenSilently();
+
       const response = await fetch('http://localhost:8080/messages', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          authorization: `Bearer ${token}`,
         },
         body: msg_str,
       });
