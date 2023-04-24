@@ -10,10 +10,36 @@ import ChatPageWriteMessage from './ChatPageWriteMessage';
 import { useAuth0 } from '@auth0/auth0-react';
 
 const ChatPage = () => {
-  const { user } = useAuth0();
+  const { user, getAccessTokenSilently } = useAuth0();
 
-  const { activeChat, messagesActiveChat } = useContext(AppContext);
+  const { activeChat, messagesActiveChat, setMessagesActiveChat } =
+    useContext(AppContext);
   const chatWindowRef = useRef<HTMLDivElement | null>(null);
+
+  // fetch the chat history when a new chat becomes active
+  useEffect(() => {
+    const getChatHistory = async () => {
+      if (activeChat) {
+        try {
+          const token = await getAccessTokenSilently();
+          // fetch chat info and messages
+          fetch(`http://localhost:8080/chats/${activeChat}`, {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }).then((res) => {
+            res.json().then((res) => {
+              // setChat(res);
+              setMessagesActiveChat(res?.messages);
+            });
+          });
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    };
+    getChatHistory();
+  }, [getAccessTokenSilently, setMessagesActiveChat, activeChat]);
 
   // Scroll to the end of the chat window whenever messages change
   useEffect(() => {

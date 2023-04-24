@@ -1,12 +1,38 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { AppContext, Tabs } from 'AppContext';
 import { useContext } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 
 const Navbar = () => {
-  const { isAuthenticated, user, logout } = useAuth0();
-  const { activeTab, setActiveTab, userProfile } = useContext(AppContext);
+  const { isAuthenticated, user, logout, getAccessTokenSilently } = useAuth0();
+  const { activeTab, setActiveTab, userProfile, setUserProfile } =
+    useContext(AppContext);
+
+  // fetch user profile data
+  useEffect(() => {
+    const getUserProfile = async () => {
+      if (isAuthenticated) {
+        try {
+          const token = await getAccessTokenSilently();
+          fetch(`http://localhost:8080/users/me`, {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }).then((res) => {
+            res.json().then((res) => {
+              setUserProfile(res);
+            });
+          });
+        } catch (e) {
+          console.log(e);
+        }
+      } else {
+        setUserProfile(undefined);
+      }
+    };
+    getUserProfile();
+  }, [getAccessTokenSilently, setUserProfile, isAuthenticated]);
 
   return (
     <nav className="navigation h-100 d-flex flex-column text-center navbar navbar-light hide-scrollbar">

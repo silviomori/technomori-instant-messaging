@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './assets/styles/custom.scss';
 import './App.css';
@@ -12,7 +12,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { UserProfile } from 'types/UserProfile';
 
 function App() {
-  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const { isAuthenticated } = useAuth0();
 
   const [userProfile, setUserProfile] = useState<UserProfile | undefined>();
   const [activeTab, setActiveTab] = useState<Tabs>(Tabs.CHATS);
@@ -25,36 +25,20 @@ function App() {
   >([]);
   const [eventSource, setEventSource] = useState<EventSource>();
 
-  // fetch chatDescriptions and subscribe to chat updates
-  const getChatData = useCallback(() => {
-    (async () => {
-      try {
-        const token = await getAccessTokenSilently();
-        fetch('http://localhost:8080/chats', {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }).then((res) => {
-          res.json().then((res) => {
-            setChatDescriptions(res);
-            const chatIds = res.map((chat: any) => chat.id);
-            const newEventSource = new EventSource(
-              `http://localhost:8080/messages/stream?chatIds=${chatIds}`,
-            );
-            setEventSource(newEventSource);
+  // subscribe to chat updates
+  useEffect(() => {
+    if (chatDescriptions) {
+      const chatIds = chatDescriptions.map((chat: any) => chat.id);
+      const newEventSource = new EventSource(
+        `http://localhost:8080/messages/stream?chatIds=${chatIds}`,
+      );
+      setEventSource(newEventSource);
 
-            return () => {
-              newEventSource.close();
-            };
-          });
-        });
-      } catch (e) {
-        console.log(e);
-      }
-    })();
-  }, [getAccessTokenSilently]);
-
-  useEffect(getChatData, [getChatData]);
+      return () => {
+        newEventSource.close();
+      };
+    }
+  }, [chatDescriptions]);
 
   // define the 'handleEvent' function used when a message arrives
   useEffect(() => {
@@ -79,58 +63,6 @@ function App() {
       };
     }
   }, [eventSource, activeChat]);
-
-  // fetch the chat history when a new chat becomes active
-  const getChatHistory = useCallback(() => {
-    (async () => {
-      if (activeChat) {
-        try {
-          const token = await getAccessTokenSilently();
-          // fetch chat info and messages
-          fetch(`http://localhost:8080/chats/${activeChat}`, {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          }).then((res) => {
-            res.json().then((res) => {
-              // setChat(res);
-              setMessagesActiveChat(res?.messages);
-            });
-          });
-        } catch (e) {
-          console.log(e);
-        }
-      }
-    })();
-  }, [getAccessTokenSilently, activeChat]);
-
-  useEffect(getChatHistory, [getChatHistory]);
-
-  // fetch user profile data
-  const getUserProfile = useCallback(() => {
-    (async () => {
-      if (isAuthenticated) {
-        try {
-          const token = await getAccessTokenSilently();
-          fetch(`http://localhost:8080/users/me`, {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          }).then((res) => {
-            res.json().then((res) => {
-              setUserProfile(res);
-            });
-          });
-        } catch (e) {
-          console.log(e);
-        }
-      } else {
-        setUserProfile(undefined);
-      }
-    })();
-  }, [getAccessTokenSilently, isAuthenticated]);
-
-  useEffect(getUserProfile, [getUserProfile]);
 
   return (
     <AppContext.Provider

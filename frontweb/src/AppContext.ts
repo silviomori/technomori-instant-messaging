@@ -16,7 +16,7 @@ export enum Tabs {
 
 type AppContextType = {
   userProfile: UserProfile | undefined;
-  setUserProfile: (profile: UserProfile) => void;
+  setUserProfile: (profile: UserProfile | undefined) => void;
   activeTab: Tabs;
   setActiveTab: (tab: Tabs) => void;
   activeChat?: number;
